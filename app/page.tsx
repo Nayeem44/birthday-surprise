@@ -3,6 +3,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 const LOVE_CONFIG = {
   yourName: "Your life long Crime Partner",
   wifeName: "My Love",
@@ -56,21 +58,21 @@ const LOVE_CONFIG = {
       title: "Engagement - A Special Promised",
       description:
         "Our first major step together, marking a special moment when we pledged our love. It was the begining of beatiful story, a special moment that is forever etched in my mind, a promise Iam grateful for every day.",
-      image: "/images/AGardenRingExchange.png",
+      image: `${BASE_PATH}/images/AGardenRingExchange.png`,
     },
     {
       date: "A special day, Our story began",
       title: "One of my favourite memories",
       description:
         "The beginning of a beautiful story I never want to end. A moment I will always keep close to my heart. The day we promised to walk through life together.",
-      image: "/images/enagementring.png",
+      image: `${BASE_PATH}/images/enagementring.png`,
     },
     {
       date: "Our future journey together",
       title: "Forever started here",
       description:
         "I promise to stand beside you, support your dreams, share your smiles, and love you in ways that words could never fully explain. Our forever started here, and my greatest wish is to keep choosing you, every single day.",
-      image: "/images/walk.png",
+      image: `${BASE_PATH}/images/walk.png`,
     },
   ],
 };
@@ -212,7 +214,7 @@ useEffect(() => {
   return () => timers.forEach(window.clearTimeout);
 }, [page, birthdayBlast]);
   useEffect(() => {
-    const audio = new Audio("/music.mp3");
+    const audio = new Audio(`${BASE_PATH}/music.mp3`);
     audio.loop = true;
     audio.volume = 0.45;
     audioRef.current = audio;
