@@ -188,7 +188,7 @@ function DurationCard({
 
 export default function BirthdayExperience() {
   const [page, setPage] = useState(0);
-  const [password, setPassword] = useState("Password");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [musicOn, setMusicOn] = useState(false);
   const [letterOpen, setLetterOpen] = useState(false);
@@ -196,6 +196,10 @@ export default function BirthdayExperience() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [countdown, setCountdown] = useState<number | null>(3);
 const [birthdayBlast, setBirthdayBlast] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [page]);
 
 useEffect(() => {
   if (page !== 4 || birthdayBlast) return;
@@ -249,19 +253,28 @@ useEffect(() => {
     if (password.trim() === LOVE_CONFIG.password) {
       setError("");
       setPassword("");
-      setPage(2);
+      goToPage(2);
       return;
     }
 
     setError("That isn't our secret word. Try again, my love ❤️");
   }
 
+  function goToPage(nextPage: number) {
+    if (nextPage === 1) {
+      setPassword("");
+      setError("");
+    }
+
+    setPage(nextPage);
+  }
+
   function next() {
-    setPage((current) => Math.min(current + 1, PAGE_NAMES.length - 1));
+    goToPage(Math.min(page + 1, PAGE_NAMES.length - 1));
   }
 
   function restart() {
-    setPage(0);
+    goToPage(0);
     setPassword("");
     setError("");
     setLetterOpen(false);
@@ -277,7 +290,7 @@ useEffect(() => {
           className="brand"
           onClick={(event) => {
             event.preventDefault();
-            setPage(0);
+            goToPage(0);
           }}
         >
           ♡ A Little Forever
@@ -747,7 +760,7 @@ useEffect(() => {
         {page > 0 && (
           <button
             className="back-button"
-            onClick={() => setPage((current) => Math.max(current - 1, 0))}
+            onClick={() => goToPage(Math.max(page - 1, 0))}
           >
             ← Previous page
           </button>
